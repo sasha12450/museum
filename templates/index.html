@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Виртуальный музей Крыма</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Виртуальный музей Крыма</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="#">Главная</a></li>
+                    <li>
+                        <a href="#">История</a>
+                        <ul class="submenu">
+                            <li><a href="/history_crimea">Древний Крым</a></li>
+                            <li><a href="/middle_ages">Средневековье</a></li>
+                            <li><a href="/modern">Новая история</a></li>
+                            <li><a href="/famous_personalities">Знаменитые личности</a></li>
+                            <li><a href="/photo_gallery">Фотогалерея</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Выставки</a>
+                        <ul class="submenu">
+                            <li><a href="/exposition">Постоянные экспозиции</a></li>
+                            <li><a href="/temporary_exhibitions">Временные выставки</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a href="#">Экспонаты</a>
+                        <ul class="submenu">
+                            <li><a href="/archaeological_finds">Археологические находки</a></li>
+                            <li><a href="/cultural_artifacts">Культурные артефакты</a></li>
+                        </ul>
+
+                    </li>
+                    <li><a href="#">Карты и история</a>
+                        <ul class="submenu">
+
+                        <li><a href="/historical_map">Историческая карта Крыма</a></li>
+                        <li><a href="/timeline">Таймлайн</a></li></li>          
+                        </ul>
+
+                    <li><a href="/about">О проекте</a></li>
+                </ul>
+
+                <div class="hamburger">
+                    <span></span>
+                    <span ></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Добро пожаловать в Виртуальный Музей Крыма</h1>
+                    <p>Исследуйте уникальные экспонаты и погружайтесь в историю региона.</p>
+                    <a href="/timeline" class="btn">Начать путешествие</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Слайдер для изображений -->
+        <section class="highlights-slider">
+            <div class="container">
+                <h2>Основные достопримечательности</h2>
+                <div class="slider-wrapper">
+                    <div class="slider">
+                        <div class="slide">
+                            <img src="{{ url_for('static', filename='image/Crimea_Russia_Chersones.jpg') }}" alt="Древний Храм Херсонеса">
+                            <div class="slide-content">
+                                <h3>Древний Храм Херсонеса</h3>
+                                <p>Этот древний храм был построен в III веке до н.э. и является одним из важнейших исторических памятников Крыма.</p>
+                                <a href="/history_crimea#target" class="btn">Посмотреть на карте</a>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="{{ url_for('static', filename='image/lastochkino_gnezdo.jpg') }}" alt="Ласточкино Гнездо">
+                            <div class="slide-content">
+                                <h3>Ласточкино Гнездо</h3>
+                                <p>Живописный замок, построенный на скале у Черного моря в XIX веке.</p>
+                                <a href="/history_crimea#target" class="btn">Посмотреть на карте</a>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="{{ url_for('static', filename='image/masandrovskiy.jpg') }}" alt="Массандровский дворец">
+                            <div class="slide-content">
+                                <h3>Массандровский дворец</h3>
+                                <p>Великолепный образец архитектуры XIX века, построенный для императора Александра III.</p>
+                                <a href="/history_crimea#target" class="btn">Посмотреть на карте</a>
+                            </div>
+                        </div>
+                        <div class="slide">
+                            <img src="{{ url_for('static', filename='image/chembalo.webp') }}" alt="Крепость Чембало">
+                            <div class="slide-content">
+                                <h3>Крепость Чембало</h3>
+                                <p>Крепость XIV века в Балаклаве, с великолепными видами на окрестности.</p>
+                                <a href="/history_crimea#target" class="btn">Посмотреть на карте</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-nav image-slider-nav">
+                    <button class="prev">&#9664;</button>
+                    <button class="next">&#9654;</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Слайдер для отзывов -->
+        <section class="testimonials">
+            <div class="container">
+                <h2>Отзывы посетителей</h2>
+                <div class="testimonials-slider">
+                    <div class="testimonial">
+                        <img src="{{ url_for('static', filename='image/Face.jpeg') }}" alt="Анна Петрова">
+                        <p>"Этот сайт стал отличным ресурсом для изучения истории Крыма."</p>
+                        <cite>- Анна Петрова</cite>
+                    </div>
+                    <div class="testimonial">
+                        <img src="{{ url_for('static', filename='image/Face1.jpeg') }}" alt="Иван Иванов">
+                        <p>"Отличный дизайн и полезная информация. Виртуальные туры - супер."</p>
+                        <cite>- Иван Иванов</cite>
+                    </div>
+                    <div class="testimonial">
+                        <img src="{{ url_for('static', filename='image/Face3.jpeg') }}" alt="Мария Сидорова">
+                        <p>"Я в восторге от интерактивных карт. Очень увлекательно!"</p>
+                        <cite>- Мария Сидорова</cite>
+                    </div>
+                    <div class="testimonial">
+                        <img src="{{ url_for('static', filename='image/Face2.jpeg') }}" alt="Петр Алексеев">
+                        <p>"Прекрасный ресурс для исследователей. Рекомендую всем."</p>
+                        <cite>- Петр Алексеев</cite>
+                    </div>
+                </div>
+                <div class="slider-nav_image testimonials-slider-nav">
+                    <button class="prev">&#9664;</button>
+                    <button class="next">&#9654;</button>
+                </div>
+            </div>
+        </section>
+        <section class="news">
+            <div class="container">
+                <h2>Последние новости</h2>
+                <div class="news-grid">
+                    <article class="news-item">
+                        <img src="{{ 'https://travelcrimea.com/images/211/99/2119917.jpg' }}" alt="Новость 1">
+                        <div class="news-content">
+                            <h3>Крым вошёл в тройку регионов, куда едут энотуристы</h3>
+                            <p>Крым вошёл в тройку российских регионов, куда едут энотуристы в бархатный сезон-2024. При этом отдыхающие стали чаще бронировать отели рядом с винодельнями полуострова, сообщает национальный туроператор Алеан.</p>
+                        </div>
+                    </article>
+                    <article class="news-item">
+                        <img src="{{ 'https://travelcrimea.com/images/339/60/3396064.jpg' }}" alt="Новость 2">
+                        <div class="news-content">
+                            <h3>На Михайловской батарее в Севастополе проведут фестиваль «Фламенко»</h3>
+                            <p>21 сентября на территории музейного комплекса «Михайловская батарея» в Севастополе состоится фестиваль «Фламенко». Под открытым небом танцоры устроят показательные выступления, а зрители насладятся танцевальным искусством, его яркой, темпераментной южно-испанской музыкальной и культурной традицией страны Пиренейского полуострова.</p>
+                        </div>
+                    </article>
+                    <article class="news-item">
+                        <img src="{{ 'https://travelcrimea.com/images/23/79/237904.jpg' }}" alt="Новость 3">
+                        <div class="news-content">
+                            <h3>Минкурортов Крыма принимает предложения по развитию туризма от крымчан, общественников и бизнеса</h3>
+                            <p>Министерство курортов и туризма Республики Крым предлагает крымчанам, представителям муниципальных образований, отраслевых общественных организаций и туристического бизнеса принять активное участие в формировании стратегии развития санаторно-курортной и туристической отрасли Республики Крым до 2036 года.</p>
+                        </div>
+                    </article>
+
+                </div>
+                <div class="read-all-news">
+                    <a href="/modern#target" class="btn read-all-button">Читать все новости</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-info">
+                <h3>Виртуальный Музей Крыма</h3>
+                <p>Откройте для себя богатую историю Крыма через уникальные виртуальные экспозиции и интерактивные ресурсы.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Быстрые ссылки</h3>
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/history_crimea">История</a></li>
+                    <li><a href="/exposition">Выставки</a></li>
+                    <li><a href="/archaeological_finds">Экспонаты</a></li>
+                    <li><a href="/about">О проекте</a></li>
+                </ul>
+            </div>
+            <div class="footer-subscribe">
+                <h3>Подписка на новости</h3>
+                <form action="/subscribe" method="POST">
+                    <input type="email" name="email" placeholder="Ваш email" required>
+                    <button type="submit">Подписаться</button>
+                </form>
+            </div>
+            
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Виртуальный Музей Крыма. Все права защищены.</p>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/script_burger_menu.js') }}"></script>
+    <script>
+        // Логика для слайдера изображений
+        document.addEventListener('DOMContentLoaded', function () {
+            const imageSlides = document.querySelectorAll('.highlights-slider .slide');
+            const imagePrevButton = document.querySelector('.image-slider-nav .prev');
+            const imageNextButton = document.querySelector('.image-slider-nav .next');
+            let currentImageSlide = 0;
+
+            function showImageSlide(index) {
+                if (index >= imageSlides.length) {
+                    currentImageSlide = 0;
+                } else if (index < 0) {
+                    currentImageSlide = imageSlides.length - 1;
+                } else {
+                    currentImageSlide = index;
+                }
+                document.querySelector('.highlights-slider .slider').style.transform = `translateX(-${currentImageSlide * 100}%)`;
+            }
+
+            imagePrevButton.addEventListener('click', function () {
+                showImageSlide(currentImageSlide - 1);
+            });
+
+            imageNextButton.addEventListener('click', function () {
+                showImageSlide(currentImageSlide + 1);
+            });
+
+            showImageSlide(currentImageSlide);
+        });
+
+        // Логика для слайдера отзывов
+        document.addEventListener('DOMContentLoaded', function () {
+            const testimonialSlides = document.querySelectorAll('.testimonials-slider .testimonial');
+            const testimonialPrevButton = document.querySelector('.testimonials-slider-nav .prev');
+            const testimonialNextButton = document.querySelector('.testimonials-slider-nav .next');
+            let currentTestimonialSlide = 0;
+
+            function showTestimonialSlide(index) {
+                testimonialSlides.forEach((slide, i) => {
+                    slide.style.display = i === index ? 'block' : 'none';
+                });
+            }
+
+            testimonialPrevButton.addEventListener('click', function () {
+                currentTestimonialSlide = (currentTestimonialSlide > 0) ? currentTestimonialSlide - 1 : testimonialSlides.length - 1;
+                showTestimonialSlide(currentTestimonialSlide);
+            });
+
+            testimonialNextButton.addEventListener('click', function () {
+                currentTestimonialSlide = (currentTestimonialSlide < testimonialSlides.length - 1) ? currentTestimonialSlide + 1 : 0;
+                showTestimonialSlide(currentTestimonialSlide);
+            });
+
+            showTestimonialSlide(currentTestimonialSlide);
+        });
+        // Изменение шапки при прокрутке
+// Кнопка "Наверх"
+const scrollTopBtn = document.createElement('div');
+scrollTopBtn.classList.add('scroll-top');
+scrollTopBtn.innerHTML = '&#8679;';
+document.body.appendChild(scrollTopBtn);
+
+window.addEventListener('scroll', function() {
+    scrollTopBtn.style.display = window.scrollY > 200 ? 'block' : 'none';
+});
+
+scrollTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+// Анимация появления элементов при прокрутке
+function revealElements() {
+    const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach(function(reveal) {
+        const windowHeight = window.innerHeight;
+        const revealTop = reveal.getBoundingClientRect().top;
+        const revealPoint = 150;
+
+        if (revealTop < windowHeight - revealPoint) {
+            reveal.classList.add('active');
+        }
+    });
+}
+
+window.addEventListener('scroll', revealElements);
+    </script>
+</body>
+
+</html>

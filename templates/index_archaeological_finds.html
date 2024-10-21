@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Археологические находки в Крыму</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_archeologica.css') }}">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Виртуальный музей Крыма</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    <li>
+                        <a href="#">История</a>
+                        <ul class="submenu">
+                            <li><a href="/history_crimea">Древний Крым</a></li>
+                            <li><a href="/middle_ages">Средневековье</a></li>
+                            <li><a href="/modern">Новая история</a></li>
+                            <li><a href="/famous_personalities">Знаменитые личности</a></li>
+                            <li><a href="/photo_gallery">Фотогалерея</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Выставки</a>
+                        <ul class="submenu">
+                            <li><a href="/exposition">Постоянные экспозиции</a></li>
+                            <li><a href="/temporary_exhibitions">Временные выставки</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a href="#">Экспонаты</a>
+                        <ul class="submenu">
+                            <li><a href="#">Археологические находки</a></li>
+                            <li><a href="/cultural_artifacts">Культурные артефакты</a></li>
+                        </ul>
+
+                    </li>
+                    <li><a href="#">Карты и история</a>
+                        <ul class="submenu">
+
+                        <li><a href="/historical_map">Историческая карта Крыма</a></li>
+                        <li><a href="/timeline">Таймлайн</a></li></li>          
+                        </ul>
+
+                    <li><a href="/about">О проекте</a></li>
+                </ul>
+
+                <div class="hamburger">
+                    <span></span>
+                    <span ></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main class="main-content">
+        <h1>Археологические находки в Крыму</h1>
+        <button class="btn-museum" >Музей-заповедник «Судакская крепость»</button>
+        <div class="artifact-container">
+            {% for item_archeologica in archeologica %}
+            <div class="artifact-card">
+                <img src="{{ item_archeologica[1] }}" alt="{{ item_archeologica[0] }}" loading="lazy">
+                <div class="artifact-title">{{ item_archeologica[0] }}</div>
+            </div>
+            {% endfor %}
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-info">
+                <h3>Виртуальный Музей Крыма</h3>
+                <p>Откройте для себя богатую историю Крыма через уникальные виртуальные экспозиции и интерактивные ресурсы.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Быстрые ссылки</h3>
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/history_crimea">История</a></li>
+                    <li><a href="/exposition">Выставки</a></li>
+                    <li><a href="/archaeological_finds">Экспонаты</a></li>
+                    <li><a href="/about">О проекте</a></li>
+                </ul>
+            </div>
+            <div class="footer-subscribe">
+                <h3>Подписка на новости</h3>
+                <form action="/subscribe" method="POST">
+                    <input type="email" name="email" placeholder="Ваш email" required>
+                    <button type="submit">Подписаться</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Виртуальный Музей Крыма. Все права защищены.</p>
+        </div>
+    </footer>
+    <!-- Модальное окно -->
+    <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modalImage">
+        <div class="modal-content">
+            <button class="close-btn" aria-label="Закрыть модальное окно">&times;</button>
+            <img id="modalImage" src="" alt="Просмотр артефакта">
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script_burger_menu.js') }}"></script>
+
+    <!-- JavaScript для модального окна -->
+    <script>
+        // Получаем элементы
+        const modal = document.getElementById('modal');
+        const modalImage = document.getElementById('modalImage');
+        const closeModalBtn = document.querySelector('.close-btn');
+        const artifactCards = document.querySelectorAll('.artifact-card');
+
+        // Функция для открытия модального окна
+        function openModal(imageSrc, altText) {
+            modalImage.src = imageSrc;
+            modalImage.alt = altText;
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            closeModalBtn.focus();
+        }
+
+        // Функция для закрытия модального окна
+        function closeModal() {
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
+        // Обработчики событий для артефактов
+        artifactCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const img = card.querySelector('img');
+                openModal(img.src, img.alt);
+            });
+        });
+
+        // Закрытие модального окна при нажатии на кнопку закрытия
+        closeModalBtn.addEventListener('click', closeModal);
+
+        // Закрытие модального окна при клике вне содержимого
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Закрытие модального окна при нажатии клавиши Esc
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+        const scrollTopBtn = document.createElement('div');
+scrollTopBtn.classList.add('scroll-top');
+scrollTopBtn.innerHTML = '&#8679;';
+document.body.appendChild(scrollTopBtn);
+
+window.addEventListener('scroll', function() {
+    scrollTopBtn.style.display = window.scrollY > 200 ? 'block' : 'none';
+});
+
+scrollTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+    </script>
+</body>
+
+</html>

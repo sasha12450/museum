@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+
+/* Сброс стилей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Основные стили */
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    scroll-behavior: smooth;
+}
+
+/* Контейнер для центрирования */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Шапка сайта */
+header {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: background 0.3s ease;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+header .logo h1:hover {
+    color: #f0a500;
+}
+
+nav {
+    position: relative;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li {
+    position: relative;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: #f0a500;
+    left: 0;
+    bottom: -5px;
+    transition: width 0.3s ease;
+}
+
+header nav ul li a:hover::after {
+    width: 100%;
+}
+
+header nav ul li a:hover {
+    color: #f0a500;
+}
+
+header nav ul .submenu {
+    display: none;
+    position: absolute;
+    background: #444;
+    top: 100%;
+    left: 0;
+    padding: 10px 0;
+    border-radius: 5px;
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+header nav ul li:hover .submenu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+header nav ul .submenu li {
+    padding: 5px 20px;
+}
+
+header nav ul .submenu li a {
+    color: #fff;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+header nav ul .submenu li a:hover {
+    background: #555;
+    color: #f0a500;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger span {
+    height: 3px;
+    background: #fff;
+    margin: 4px 0;
+    width: 25px;
+    transition: transform 0.4s ease, opacity 0.4s ease, background 0.4s ease;
+    transform-origin: center center;}
+/* Медиазапросы для адаптивности */
+
+
+@media (max-width: 768px) {
+    header nav ul {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      background: #333;
+      padding: 20px 0; /* Уменьшите паддинг по бокам для полной ширины */
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      border-radius: 0 0 10px 10px;
+      z-index: 999; /* Чтобы меню было поверх других элементов */
+    }
+  
+    header nav ul li a {
+      display: block;
+      width: 100%;
+      padding: 5px 0; /* Увеличьте верхний и нижний отступ для лучшей нажимаемости */
+      color: #fff;
+      text-decoration: none;
+    }
+      header nav ul.show {
+          display: flex;
+      }
+      .hamburger span {
+          height: 3px;
+          background: #fff;
+          margin: 4px 0;
+          width: 25px;
+          transition: transform 0.4s ease, opacity 0.4s ease, background 0.4s ease;
+          transform-origin: center center;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+          transform: rotate(45deg) translate(7px, 7px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+          opacity: 0; /* Это скрывает среднюю полоску */
+        }
+        
+        .hamburger.active span:nth-child(3) {
+          transform: rotate(-45deg) translate(7px, -7px);
+        }
+      header nav ul li {
+          width: 100%;
+          text-align: center;
+      }
+  
+      header nav ul .submenu {
+          position: static;
+          display: none;
+          flex-direction: column;
+          background: #444;
+          margin-top: 10px;
+          border-radius: 5px;
+      }
+  
+      header nav ul li:hover .submenu {
+          display: flex;
+      }
+  
+      header .hamburger {
+          display: flex;
+      }
+  
+
+  }
+  
+  @media (max-width: 480px) {
+      header .logo h1 {
+          font-size: 18px;
+      }
+  }

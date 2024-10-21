@@ -1,0 +1,565 @@
+/* Сброс стилей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Основные стили */
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    padding-top: 80px; /* Отступ для фиксированной шапки */
+    scroll-behavior: smooth;
+}
+
+/* Контейнер для центрирования */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Шапка сайта */
+header {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: background 0.3s ease;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    animation: fadeInText 5s ease-in-out forwards;
+}
+
+header .logo h1:hover {
+    color: #f0a500;
+}
+
+nav {
+    position: relative;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li {
+    position: relative;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block; /* Изменение на inline-block для определения ширины полоски */
+    position: relative;
+    padding-bottom: 5px; /* Добавьте немного отступа для размещения полоски */
+    transition: color 0.3s ease;
+}
+
+header nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0%; /* Начальная ширина полоски */
+    height: 2px;
+    background: #f0a500;
+    left: 0;
+    bottom: 0; /* Располагаем полоску под текстом */
+    transition: width 0.3s ease;
+}
+
+header nav ul li a:hover::after {
+    width: 100%; /* Расширяем ширину полоски при наведении */
+}
+
+header nav ul li a:hover {
+    color: #f0a500;
+}
+
+header nav ul .submenu {
+    display: none;
+    position: absolute;
+    background: #444;
+    top: 100%;
+    left: 0;
+    padding: 10px 0;
+    border-radius: 5px;
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+header nav ul li:hover .submenu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+header nav ul .submenu li {
+    padding: 5px 20px;
+}
+
+header nav ul .submenu li a {
+    color: #fff;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+header nav ul .submenu li a:hover {
+    background: #555;
+    color: #f0a500;
+}
+
+/* Хамбургер для мобильных устройств */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger span {
+    height: 3px;
+    background: #fff;
+    margin: 4px 0;
+    width: 25px;
+    transition: transform 0.4s ease, opacity 0.4s ease, background 0.4s ease;
+    transform-origin: center center;
+}
+
+/* Эффект затемнения при прокрутке */
+header.scrolled {
+    background: rgba(51, 51, 51, 0.9);
+    backdrop-filter: blur(5px);
+}
+
+/* Заголовки секций */
+h1, h2, h3 {
+    font-family: 'Merriweather', serif;
+}
+
+@media (max-width: 768px) {
+    header nav ul {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background: #333;
+        padding: 20px 0;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        border-radius: 0 0 10px 10px;
+        z-index: 999;
+    }
+
+    header nav ul li a {
+        display: block;
+        width: 100%;
+        padding: 10px 0; /* Увеличен padding для лучшей нажимаемости */
+        color: #fff;
+        text-decoration: none;
+    }
+
+    header nav ul.show {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(7px, 7px);
+    }
+    
+    .hamburger.active span:nth-child(2) {
+        opacity: 0; /* Скрывает среднюю полоску */
+    }
+    
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    header nav ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    header nav ul .submenu {
+        position: static;
+        display: none;
+        flex-direction: column;
+        background: #444;
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+
+    header nav ul li.show > .submenu {
+        display: block;
+    }
+
+    header nav ul li.show {
+        position: relative; /* Ensure parent has a position */
+    }
+
+    /* Изменение размеров шапки и навигации на мобильных устройствах */
+    .hero h1 {
+        font-size: 2rem;
+    }
+
+    .hero p {
+        font-size: 1rem;
+    }
+
+    .highlights-slider h2 {
+        font-size: 2rem;
+    }
+
+    .news-item {
+        max-width: 100%;
+    }
+
+    .slider-nav button {
+        font-size: 1.5rem;
+    }
+
+    .scroll-top {
+        right: 20px;
+        bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    header .logo h1 {
+        font-size: 18px;
+    }
+
+    .hero h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-content {
+        padding: 20px 10px;
+    }
+
+    .highlights-slider h2 {
+        font-size: 1.8rem;
+    }
+
+    .news-content h3 {
+        font-size: 1.2rem;
+    }
+
+    .news-content p {
+        font-size: 0.9rem;
+    }
+}
+
+
+/* Заголовки секций */
+.section-header h1 {
+    background: linear-gradient(to right, #f0a500, #c87f00); /* Основные оранжевые оттенки */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.section-header p {
+    font-size: 1.2rem;
+    text-align: center;
+    color: #777;
+    margin-bottom: 40px;
+}
+
+/* Gallery Styles */
+.gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+.gallery-item {
+    width: calc(33% - 20px);
+    transition: transform 0.3s ease;
+}
+
+.gallery-item img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item:hover {
+    transform: scale(1.1);
+}
+
+/* Map and Timeline */
+#map-container, #timeline-container {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Timeline Events */
+.timeline {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+
+.event {
+    text-align: center;
+    width: 200px;
+    transition: transform 0.3s ease;
+}
+
+.event:hover {
+    transform: translateY(-10px);
+}
+
+/* Video Gallery */
+.video-gallery video {
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 560px;
+}
+
+.video-gallery video:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Infographics */
+#byzantine-infographic {
+    background-color: #f0f4f8;
+    padding: 50px 20px;
+    text-align: center;
+}
+
+.infographic {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.fact-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fact-box:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+.fact-box h3 {
+    font-size: 1.8em;
+    color: #f0a500; /* Основной оранжевый */
+}
+
+/* Buttons */
+.button {
+    background-color: #f0a500; /* Основной оранжевый */
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.button:hover {
+    background-color: #c87f00; /* Тёмно-оранжевый */
+    transform: translateY(-5px);
+}
+
+/* Дополнительные эффекты при наведении на кнопки */
+.btn, .news-content .btn, .slide-content .btn {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn::after, .news-content .btn::after, .slide-content .btn::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 0%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: -1;
+    transition: height 0.3s ease;
+}
+
+.btn:hover::after, .news-content .btn:hover::after, .slide-content .btn:hover::after {
+    height: 100%;
+}
+
+/* Анимация появления элементов при прокрутке */
+.reveal {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Анимации */
+.scroll-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background: #f0a500;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: none;
+    z-index: 1000;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.scroll-top:hover {
+    background: #c87f00;
+    transform: translateY(-5px);
+}
+
+/* Футер сайта */
+footer {
+    background: #333;
+    color: #fff;
+    padding: 40px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(to bottom right, transparent 50%, #333 50%);
+    transform: rotate(180deg);
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+footer .footer-info,
+footer .footer-links,
+footer .footer-subscribe {
+    flex: 1 1 300px; /* Адаптивная ширина */
+    margin: 10px;
+}
+
+footer h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+footer p, footer ul {
+    font-size: 1rem;
+}
+
+footer ul {
+    list-style: none;
+}
+
+footer ul li {
+    margin-bottom: 10px;
+}
+
+footer ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer ul li a:hover {
+    color: #f0a500;
+}
+
+.footer-subscribe form {
+    display: flex;
+    max-width: 400px;
+}
+
+.footer-subscribe input[type="email"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    width: 70%;
+    outline: none;
+}
+
+.footer-subscribe button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background: #f0a500;
+    color: #333;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease, color 0.6s ease, transform 0.3s ease;
+}
+
+.footer-subscribe button:hover {
+    background: #c87f00;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+.chart-container {
+    width: 100%;  /* Ширина контейнера будет 100% от родителя */
+    max-width: 600px; /* Максимальная ширина для больших экранов */
+    height: auto; /* Высота будет автоматической */
+}
+
+#medieval-chart {
+    width: 100%;  /* Диаграмма будет занимать всю ширину контейнера */
+    height: 100%; /* Высота будет адаптирована пропорционально */
+}

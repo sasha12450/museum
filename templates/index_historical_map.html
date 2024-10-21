@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Историческая карта Крыма</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_historical_map.css') }}">
+    <!-- Подключение Яндекс.Карт API -->
+    <script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&apikey=ВАШ_API_КЛЮЧ" type="text/javascript"></script>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Виртуальный музей Крыма</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    <li>
+                        <a href="#">История</a>
+                        <ul class="submenu">
+                            <li><a href="/history_crimea">Древний Крым</a></li>
+                            <li><a href="/middle_ages">Средневековье</a></li>
+                            <li><a href="/modern">Новая история</a></li>
+                            <li><a href="/famous_personalities">Знаменитые личности</a></li>
+                            <li><a href="/photo_gallery">Фотогалерея</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Выставки</a>
+                        <ul class="submenu">
+                            <li><a href="/exposition">Постоянные экспозиции</a></li>
+                            <li><a href="/temporary_exhibitions">Временные выставки</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a href="#">Экспонаты</a>
+                        <ul class="submenu">
+                            <li><a href="/archaeological_finds">Археологические находки</a></li>
+                            <li><a href="/cultural_artifacts">Культурные артефакты</a></li>
+                        </ul>
+
+                    </li>
+                    <li><a href="#">Карты и история</a>
+                        <ul class="submenu">
+
+                        <li><a href="#">Историческая карта Крыма</a></li>
+                        <li><a href="/timeline">Таймлайн</a></li></li>          
+                        </ul>
+
+                    <li><a href="/about">О проекте</a></li>
+                </ul>
+
+                <div class="hamburger">
+                    <span></span>
+                    <span ></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main class="main-content">
+        <h1>Историческая карта Крыма</h1>
+        
+        <!-- Контейнер для фильтров -->
+        <div class="map-controls">
+            <div class="filter-group">
+                <h3>Исторический период:</h3>
+                <label><input type="checkbox" id="ancientCheckbox" checked> Древний Крым</label>
+                <label><input type="checkbox" id="medievalCheckbox" checked> Средневековье</label>
+                <label><input type="checkbox" id="modernCheckbox" checked> Современный Крым</label>
+            </div>
+            <div class="filter-group">
+                <h3>Категории:</h3>
+                <label><input type="checkbox" id="eventsCheckbox" checked> События</label>
+                <label><input type="checkbox" id="archaeologyCheckbox" checked> Археология</label>
+
+            </div>
+        </div>
+        
+        <!-- Контейнер для карты -->
+        <div id="historicalMap"></div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-info">
+                <h3>Виртуальный Музей Крыма</h3>
+                <p>Откройте для себя богатую историю Крыма через уникальные виртуальные экспозиции и интерактивные ресурсы.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Быстрые ссылки</h3>
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/history_crimea">История</a></li>
+                    <li><a href="/exposition">Выставки</a></li>
+                    <li><a href="/archaeological_finds">Экспонаты</a></li>
+                    <li><a href="/about">О проекте</a></li>
+                </ul>
+            </div>
+            <div class="footer-subscribe">
+                <h3>Подписка на новости</h3>
+                <form action="/subscribe" method="POST">
+                    <input type="email" name="email" placeholder="Ваш email" required>
+                    <button type="submit">Подписаться</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Виртуальный Музей Крыма. Все права защищены.</p>
+        </div>
+    </footer>
+    <!-- Модальное окно (опционально) -->
+    <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modalImage">
+        <div class="modal-content">
+            <button class="close-btn" aria-label="Закрыть модальное окно">&times;</button>
+            <img id="modalImage" src="" alt="Просмотр артефакта">
+            <div id="modalDescription" class="modal-description"></div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script_burger_menu.js') }}"></script>
+
+    <!-- JavaScript для модального окна и Яндекс.Карт -->
+    <script>
+        // Модальное окно
+        const modal = document.getElementById('modal');
+        const modalImage = document.getElementById('modalImage');
+        const modalDescription = document.getElementById('modalDescription');
+        const closeModalBtn = document.querySelector('.close-btn');
+
+        // Функция для открытия модального окна
+        function openModal(imageSrc, altText, description) {
+            modalImage.src = imageSrc;
+            modalImage.alt = altText;
+            modalDescription.innerHTML = description;
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            closeModalBtn.focus();
+        }
+
+        // Функция для закрытия модального окна
+        function closeModal() {
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+
+        // Закрытие модального окна при нажатии на кнопку закрытия
+        closeModalBtn.addEventListener('click', closeModal);
+
+        // Закрытие модального окна при клике вне содержимого
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Закрытие модального окна при нажатии клавиши Esc
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && modal.classList.contains('active')) {
+                closeModal();
+            }
+        });
+
+        // Яндекс.Карты
+        ymaps.ready(init);
+        function init(){
+            // Создание карты
+            const map = new ymaps.Map("historicalMap", {
+                center: [44.9521, 34.1024], // Координаты центра Крыма
+                zoom: 7,
+                controls: ['zoomControl', 'fullscreenControl']
+            });
+
+            // Создание групп слоев для разных исторических периодов
+            const ancientGeoObjects = new ymaps.GeoObjectCollection({}, {
+                preset: 'islands#blueIcon',
+                iconColor: '#1e90ff'
+            });
+
+            const medievalGeoObjects = new ymaps.GeoObjectCollection({}, {
+                preset: 'islands#greenIcon',
+                iconColor: '#32cd32'
+            });
+
+            const modernGeoObjects = new ymaps.GeoObjectCollection({}, {
+                preset: 'islands#redIcon',
+                iconColor: '#ff4500'
+            });
+
+            // Создание коллекции событий
+            const eventsGeoObjects = new ymaps.GeoObjectCollection({}, {
+                preset: 'islands#yellowIcon',
+                iconColor: '#ffd700'
+            });
+
+            // Создание коллекции археологических объектов
+            const archaeologyGeoObjects = new ymaps.GeoObjectCollection({}, {
+                preset: 'islands#purpleIcon',
+                iconColor: '#800080'
+            });
+
+            // Создание коллекции торговых путей
+            const tradeGeoObjects = new ymaps.GeoObjectCollection({}, {
+                preset: 'islands#grayIcon',
+                iconColor: '#808080'
+            });
+
+            // Создание коллекции демографических изменений
+            const demographicsGeoObjects = new ymaps.GeoObjectCollection({}, {
+                preset: 'islands#pinkIcon',
+                iconColor: '#ff69b4'
+            });
+            ancientGeoObjects.add(new ymaps.Placemark([44.61167, 33.4933], {
+        balloonContent: '<b>Херсонес Таврический</b><br>Античный город и археологический памятник, основанный древними греками. Славится руинами храмов, театров и жилых кварталов. Включен в список объектов Всемирного наследия ЮНЕСКО.',
+        hintContent: 'Херсонес Таврический'
+    }, {
+        preset: 'islands#blueIcon',
+        iconCaption: 'Херсонес Таврический'
+    }));
+        // Древний Крым
+        ancientGeoObjects.add(new ymaps.Placemark([45.350378, 36.469419], {
+            balloonContent: '<b>Древний Пантикапей</b><br>Столица Боспорского царства, основанная в VI веке до н.э. на берегу Керченского пролива. Здесь сохранились фрагменты древних стен, акрополя и некрополя.',
+            hintContent: 'Древний Пантикапей'
+        }, {
+            preset: 'islands#blueIcon',
+            iconCaption: 'Древний Пантикапей'
+        }));
+
+        ancientGeoObjects.add(new ymaps.Placemark([45.2806, 35.5236], {
+            balloonContent: '<b>Каменское поселение</b><br>Археологический памятник, относящийся к скифскому периоду. Здесь обнаружены остатки жилых построек и крепостных стен, датируемых IV веком до н.э.',
+            hintContent: 'Каменское поселение'
+        }, {
+            preset: 'islands#blueIcon',
+            iconCaption: 'Каменское поселение'
+        }));
+
+        ancientGeoObjects.add(new ymaps.Placemark([44.428770, 34.120707], {
+            balloonContent: '<b>Руины античного города Гаспра</b><br>Остатки древнего греческого города, основанного в VI веке до н.э. Здесь можно увидеть фрагменты стен и храмов, относящихся к эпохе античности.',
+            hintContent: 'Руины античного города Гаспра'
+        }, {
+            preset: 'islands#blueIcon',
+            iconCaption: 'Руины античного города Гаспра'
+        }));
+
+        ancientGeoObjects.add(new ymaps.Placemark([45.713478, 34.392834], {
+            balloonContent: '<b>Древний город Джанкой</b><br>Археологическое поселение, где сохранились следы различных цивилизаций, включая скифов, греков и татар. Обнаружены остатки крепостных сооружений и храмов.',
+            hintContent: 'Древний город Джанкой'
+        }, {
+            preset: 'islands#blueIcon',
+            iconCaption: 'Древний город Джанкой'
+        }));
+
+        ancientGeoObjects.add(new ymaps.Placemark([44.629618, 33.949681], {
+            balloonContent: '<b>Крепость Тепе-Кермен</b><br>Высокогорная крепость, находящаяся на вершине холма. Сохранились пещерные храмы и оборонительные сооружения, датируемые VI веком н.э.',
+            hintContent: 'Крепость Тепе-Кермен'
+        }, {
+            preset: 'islands#blueIcon',
+            iconCaption: 'Крепость Тепе-Кермен'
+        }));
+
+        ancientGeoObjects.add(new ymaps.Placemark([45.019210, 35.358481], {
+            balloonContent: '<b>Археологический комплекс Тепе-Оба</b><br>Археологический памятник на холме Тепе-Оба, включающий остатки древних сооружений. Место представляет интерес для историков и археологов, а также туристов, интересующихся древней историей Крыма.',
+            hintContent: 'Археологический комплекс Тепе-Оба'
+        }, {
+            preset: 'islands#blueIcon',
+            iconCaption: 'Археологический комплекс Тепе-Оба'
+        }));
+
+        // (Опционально) Добавление Пещеры Таврида, если хотите включить её в Древний Крым
+        ancientGeoObjects.add(new ymaps.Placemark([45.043394, 34.285171], {
+            balloonContent: '<b>Пещера Таврида</b><br>Живописная карстовая пещера с многочисленными сталактитами и сталагмитами. Связана с древними обрядами и мифами.',
+            hintContent: 'Пещера Таврида'
+        }, {
+            preset: 'islands#blueIcon',
+            iconCaption: 'Пещера Таврида'
+        }));         // Древний Крым
+
+
+            // Добавление маркеров для Средневековья
+            medievalGeoObjects.add(new ymaps.Placemark([44.7411, 33.9244], {
+            balloonContent: '<b>Чуфут-Кале</b><br>Средневековый город-крепость, расположенный на возвышенности. Считается одним из первых караимских поселений в Крыму. Сохранились дома, мечети и оборонительные сооружения.'
+        }, {
+            iconCaption: 'Чуфут-Кале'
+        }));
+
+        medievalGeoObjects.add(new ymaps.Placemark([44.8416, 34.9583], {
+            balloonContent: '<b>Генуэзская крепость</b><br>Средневековая крепость, построенная генуэзцами в XIV веке на побережье Судака. Сохранились башни, крепостные стены и внутренние дворики.'
+        }, {
+            iconCaption: 'Генуэзская крепость'
+        }));
+
+        medievalGeoObjects.add(new ymaps.Placemark([44.592834, 33.800891], {
+            balloonContent: '<b>Мангуп-Кале</b><br>Остатки средневековой столицы княжества Феодоро, расположенной на вершине плато. Здесь можно увидеть пещерные города, крепости и христианские храмы.'
+        }, {
+            iconCaption: 'Мангуп-Кале'
+        }));
+
+        medievalGeoObjects.add(new ymaps.Placemark([44.748488, 33.881822], {
+            balloonContent: '<b>Дворец ханов</b><br>Дворец крымских ханов в Бахчисарае, построенный в XVI веке. Архитектурный ансамбль включает мечеть, гарем, сады и фонтаны.'
+        }, {
+            iconCaption: 'Дворец ханов'
+        }));
+
+        medievalGeoObjects.add(new ymaps.Placemark([45.0323, 35.0944], {
+            balloonContent: '<b>Старый Хан</b><br>Старейшее поселение ханского периода, которое включает в себя развалины крепости и древних мечетей.'
+        }, {
+            iconCaption: 'Старый Хан'
+        }));
+
+        medievalGeoObjects.add(new ymaps.Placemark([44.748724, 33.881493], {
+            balloonContent: '<b>Бахчисарайский фонтан</b><br>Фонтан в стиле исламской архитектуры, ставший символом Бахчисарайского дворца и известный благодаря произведению Пушкина «Фонтан слёз».'
+        }, {
+            iconCaption: 'Бахчисарайский фонтан'
+        }));
+
+        medievalGeoObjects.add(new ymaps.Placemark([44.591552, 33.771540], {
+            balloonContent: '<b>Пещерный монастырь Шулдан</b><br>Пещерный монастырь, расположенный на скале, с видом на ущелье. Основан в средние века и до сих пор привлекает паломников и туристов.'
+        }, {
+            iconCaption: 'Пещерный монастырь Шулдан'
+        }));
+
+        medievalGeoObjects.add(new ymaps.Placemark([44.604274, 33.607764], {
+            balloonContent: '<b>Свято-Климентовский монастырь</b><br>Пещерный монастырь, основанный в I веке н.э. Утверждается, что здесь был сослан и мученически погиб святой Климент.'
+        }, {
+            iconCaption: 'Свято-Климентовский монастырь'
+        }));
+
+        medievalGeoObjects.add(new ymaps.Placemark([45.193538, 33.298001], {
+            balloonContent: '<b>Церковь Иоанна Предтечи в Евпатории</b><br>Старейшая православная церковь в Евпатории, построенная в XIV веке. Здание привлекает внимание своей древней архитектурой и богатой историей.'
+        }, {
+            iconCaption: 'Церковь Иоанна Предтечи в Евпатории'
+        }));
+
+            // Добавление маркеров для Современного периода
+            modernGeoObjects.add(new ymaps.Placemark([44.430630, 34.128575], {
+    balloonContent: '<b>Ласточкино гнездо</b><br>Замок на скале, возведенный в неоготическом стиле на краю Аврориной скалы. Является одной из визитных карточек Крыма.'
+}, {
+    iconCaption: 'Ласточкино гнездо'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([44.448575, 34.056453], {
+    balloonContent: '<b>Ай-Петри</b><br>Одна из самых известных горных вершин Крыма с панорамными видами на Южный берег. Популярное место для треккинга и альпинизма.'
+}, {
+    iconCaption: 'Ай-Петри'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([44.948882, 34.095292], {
+    balloonContent: '<b>Симферопольский краеведческий музей</b><br>Краеведческий музей, посвященный истории, культуре и природе Крыма. В музее представлена богатая коллекция археологических находок, этнографических экспонатов и предметов искусства.'
+}, {
+    iconCaption: 'Симферопольский краеведческий музей'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([44.952033, 34.105530], {
+    balloonContent: '<b>Симферопольский центральный парк</b><br>Основной городской парк Симферополя, известный своими зелеными аллеями, фонтанами и местами отдыха. Популярное место для прогулок и семейного отдыха.'
+}, {
+    iconCaption: 'Симферопольский центральный парк'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([45.19166666666667, 33.37444444444444], {
+    balloonContent: '<b>Яхт-клуб Евпатории</b><br>Современный яхт-клуб на побережье Евпатории, предлагающий услуги для любителей парусного спорта и водных видов отдыха. Имеет развитую инфраструктуру и организует регулярные соревнования.'
+}, {
+    iconCaption: 'Яхт-клуб Евпатории'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([44.914722, 35.231389], {
+    balloonContent: '<b>Золотые ворота Крыма</b><br>Скала необычной формы, расположенная в море недалеко от Коктебеля. Известна своей природной аркой, через которую можно проплыть на лодке.'
+}, {
+    iconCaption: 'Золотые ворота Крыма'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([44.517354, 34.187646], {
+    balloonContent: '<b>Винодельня Массандра</b><br>Одна из старейших виноделен Крыма, основанная в XIX веке. Здесь производят знаменитые крымские вина, а также проводят экскурсии и дегустации.'
+}, {
+    iconCaption: 'Винодельня Массандра'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([45.346913, 32.494232], {
+    balloonContent: '<b>Тарханкутский маяк</b><br>Один из старейших маяков Крыма, построенный в XIX веке. Символ Тарханкутского полуострова, он служит ориентиром для мореплавателей и привлекает туристов своей историей и живописным видом на море.'
+}, {
+    iconCaption: 'Тарханкутский маяк'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([45.342688, 32.955971], {
+    balloonContent: '<b>Коса Беляус</b><br>Живописная песчаная коса с белыми пляжами и чистой водой. Идеальное место для спокойного отдыха и наслаждения природой.'
+}, {
+    iconCaption: 'Коса Беляус'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([44.517354, 34.187646], {
+    balloonContent: '<b>Винодельня Массандра</b><br>Одна из старейших виноделен Крыма, основанная в XIX веке. Здесь производят знаменитые крымские вина, а также проводят экскурсии и дегустации.'
+}, {
+    iconCaption: 'Винодельня Массандра'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([45.119456, 33.556004], {
+    balloonContent: '<b>Сакское озеро</b><br>Озеро с лечебными грязями, известное своими целебными свойствами. Вокруг озера расположены санатории, где проводятся процедуры с использованием грязей.'
+}, {
+    iconCaption: 'Сакское озеро'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([45.1878, 33.3477], {
+    balloonContent: '<b>Мойнакское озеро</b><br>Солёное озеро на окраине Евпатории, известное своими лечебными грязями. Популярное место для оздоровительных процедур и отдыха.'
+}, {
+    iconCaption: 'Мойнакское озеро'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([44.467713, 34.143672], {
+    balloonContent: '<b>Ливадийский дворец</b><br>Исторический дворец, построенный в конце XIX века, известный как место проведения Ялтинской конференции 1945 года. Окружен красивыми садами и парками, является популярным туристическим объектом.'
+}, {
+    iconCaption: 'Ливадийский дворец'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([44.419897, 34.055809], {
+    balloonContent: '<b>Дворец Воронцова</b><br>Величественный дворец в Альупке, построенный в стиле неоготики. Окружен садами с экзотическими растениями и является одним из главных архитектурных памятников Крыма.'
+}, {
+    iconCaption: 'Дворец Воронцова'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([44.495389, 34.163876], {
+    balloonContent: '<b>Свято-Дмитриевский собор в Ялте</b><br>Величественный православный собор, построенный в начале XX века. Известен своими мозаиками и архитектурными деталями, является важным религиозным и культурным центром города.'
+}, {
+    iconCaption: 'Свято-Дмитриевский собор в Ялте'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([44.949066, 34.103953], {
+    balloonContent: '<b>Свято-Троицкий собор в Симферополе</b><br>Главный православный храм Симферополя, известный своими архитектурными особенностями и богатым интерьером. Является центром религиозной жизни города.'
+}, {
+    iconCaption: 'Свято-Троицкий собор в Симферополе'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([45.196609, 33.379023], {
+    balloonContent: '<b>Собор Николая Чудотворца</b><br>Православный собор, посвящённый Святому Николаю Чудотворцу, расположен в городе Евпатория. Построен в XIX веке и является важным религиозным центром региона. Собор известен своей величественной архитектурой и уникальными росписями.'
+}, {
+    iconCaption: 'Собор Николая Чудотворца'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([45.349355, 36.469992], {
+    balloonContent: '<b>Гора Митридат</b><br>Гора Митридат расположена в центре города Керчь на востоке Крыма. Это одно из наиболее знаковых мест города, известное своими историческими и культурными памятниками. На вершине горы находится митридатская лестница, состоящая из 400 ступеней, ведущая к памятнику героической обороне Керчи в годы Великой Отечественной войны. На горе также расположены руины древнего храма и остатки крепости, что делает это место интересным для любителей истории. С вершины открывается захватывающий вид на Керченский пролив и окрестности. Гора получила свое название в честь царя Митридата VI Евпатора, правителя Понта, который оставил след в истории региона.'
+}, {
+    iconCaption: 'Гора Митридат'
+}));
+
+modernGeoObjects.add(new ymaps.Placemark([44.825235, 34.915470], {
+    balloonContent: '<b>Тропа Голицына</b><br>Тропа Голицына — живописный маршрут на Южном берегу Крыма, названный в честь князя Льва Голицына, который спонсировал её строительство в конце XIX века. Общая длина тропы составляет около 7 километров, и она проходит через живописные участки, включая скалистые утесы, бухты и лесистые территории. Тропа предлагает потрясающие виды на Черное море и окрестные пейзажи, а также возможность увидеть такие природные образования, как пещеры и гроты. Тропа умеренно сложная, с некоторыми участками, требующими осторожности из-за неровностей и скользких камней.'
+}, {
+    iconCaption: 'Тропа Голицына'
+}));
+
+            // Добавление маркеров событий
+            eventsGeoObjects.add(new ymaps.Placemark([46.162634, 33.647519], {
+                balloonContent: '<b>Вход немецких войск в Крым через Перекопский перешеек</b>'
+            }, {
+                iconCaption: 'Перекопский перешеек'
+            }));
+            eventsGeoObjects.add(new ymaps.Placemark([44.9572, 34.1108], {
+                balloonContent: '<b>Октябрь — ноябрь 1941 года — Крымская оборонительная операция</b>'
+            }, {
+                iconCaption: 'Симферополь'
+            }));
+
+            eventsGeoObjects.add(new ymaps.Placemark([44.616020, 33.524471], {
+                balloonContent: '<b>30 октября 1941 года — Начало обороны Севастополя</b>'
+            }, {
+                iconCaption: 'Севастополя'
+            }));
+
+            eventsGeoObjects.add(new ymaps.Placemark([45.315818, 36.489937], {
+                balloonContent: '<b>16 мая 1942 года — Эвакуация частей с Керченского полуострова</b>'
+            }, {
+                iconCaption: 'Керчь'
+            }));
+            eventsGeoObjects.add(new ymaps.Placemark([46.110727, 33.691315], {
+                balloonContent: '<b>8 апреля 1944 года — Крымская наступательная операция</b>'
+            }, {
+                iconCaption: 'Освобождение Армянска'
+            }));
+            eventsGeoObjects.add(new ymaps.Placemark([44.612046, 33.486997], {
+                balloonContent: '<b>9 мая 1944 года — Освобождение Севастополя</b>'
+            }, {
+                iconCaption: 'Освобождение Севастополя'
+            }));
+            eventsGeoObjects.add(new ymaps.Placemark([44.951103, 34.089872], {
+                balloonContent: '<b>12 мая 1944 года — Полное освобождение Крыма</b>'
+            }, {
+                iconCaption: 'Освобождение Симферополя'
+            }));
+            eventsGeoObjects.add(new ymaps.Placemark([44.950814, 34.174728], {
+                balloonContent: '<b>Присоединение Крыма к Российской империи (1783)</b>'
+            }, {
+                iconCaption: 'Симферополь'
+            }));
+            eventsGeoObjects.add(new ymaps.Placemark([44.950814, 34.174728], {
+                balloonContent: '<b>Референдум о присоединении Крыма к России (2014)</b>'
+            }, {
+                iconCaption: 'Симферополь'
+            }));
+            // Добавление маркеров археологических объектов
+            archaeologyGeoObjects.add(new ymaps.Placemark([44.610448, 33.739522], {
+            balloonContent: '<b>Древний «паркер»</b><br>Обнаружен в Эски-Кермене, средневековом городе-крепости в Бахчисарайском районе.',
+            iconCaption: 'Эски-Кермен'
+            }));
+
+        archaeologyGeoObjects.add(new ymaps.Placemark([44.411336, 33.824753], {
+            balloonContent: '<b>Сводчатый склеп</b><br>Найден в храмовом комплексе Кильсе-Бурун на Ай-Петринской яйле в окрестностях Ялты.',
+            iconCaption: 'Кильсе-Бурун'
+            }));
+
+        archaeologyGeoObjects.add(new ymaps.Placemark([44.843196, 33.606828], {
+            balloonContent: '<b>Золотые украшения скифов</b><br>Обнаружены в Усть-Альминском некрополе в Бахчисарайском районе.',
+            iconCaption: 'Усть-Альминский некрополь'
+            }));
+
+        archaeologyGeoObjects.add(new ymaps.Placemark([45.236889, 36.417935], {
+            balloonContent: '<b>Культовый комплекс III века до н. э.</b><br>Открыт при раскопках античного города Нимфей в окрестностях Керчи.',
+            iconCaption: 'Нимфей'
+            }));
+
+        archaeologyGeoObjects.add(new ymaps.Placemark([44.751207, 33.893519], {
+            balloonContent: '<b>Каменный идол из древнего склепа</b><br>Захоронение IV века н. э. с найденным каменным идолом.',
+            iconCaption: 'Древний склеп'
+            }));
+
+        archaeologyGeoObjects.add(new ymaps.Placemark([44.421012, 34.053733], {
+            balloonContent: '<b>Фонтан XIX века</b><br>Фонтан был случайно обнаружен на частном огороде в Алупке.',
+            iconCaption: 'Фонтан Алупка'
+            }));
+
+           
+
+          
+
+          
+
+            // Добавление коллекций на карту
+            map.geoObjects.add(ancientGeoObjects);
+            map.geoObjects.add(medievalGeoObjects);
+            map.geoObjects.add(modernGeoObjects);
+            map.geoObjects.add(eventsGeoObjects);
+            map.geoObjects.add(archaeologyGeoObjects);
+            map.geoObjects.add(tradeGeoObjects);
+            map.geoObjects.add(demographicsGeoObjects);
+            map.geoObjects.add(ancientBorders);
+            map.geoObjects.add(medievalBorders);
+
+            // Функции для управления видимостью слоёв
+            function toggleLayer(layer, checkbox) {
+                if (checkbox.checked) {
+                    map.geoObjects.add(layer);
+                } else {
+                    map.geoObjects.remove(layer);
+                }
+            }
+
+            // Добавление обработчиков для фильтров
+            document.getElementById('ancientCheckbox').addEventListener('change', function() {
+                toggleLayer(ancientGeoObjects, this);
+                toggleLayer(ancientBorders, this);
+            });
+
+            document.getElementById('medievalCheckbox').addEventListener('change', function() {
+                toggleLayer(medievalGeoObjects, this);
+                toggleLayer(medievalBorders, this);
+            });
+
+            document.getElementById('modernCheckbox').addEventListener('change', function() {
+                toggleLayer(modernGeoObjects, this);
+            });
+
+            document.getElementById('eventsCheckbox').addEventListener('change', function() {
+                toggleLayer(eventsGeoObjects, this);
+            });
+
+            document.getElementById('archaeologyCheckbox').addEventListener('change', function() {
+                toggleLayer(archaeologyGeoObjects, this);
+            });
+
+
+
+
+            // Добавление кликабельности для маркеров, чтобы открывать модальное окно
+            function addModalOnPlacemark(placemark) {
+                placemark.events.add('click', function (e) {
+                    const balloonContent = placemark.properties.get('balloonContent');
+                    // Здесь можно добавить дополнительные данные, такие как изображение и описание
+                    openModal('path/to/image.jpg', placemark.properties.get('iconCaption'), balloonContent);
+                });
+            }
+
+            // Применение функции к каждому маркеру
+            ancientGeoObjects.each(addModalOnPlacemark);
+            medievalGeoObjects.each(addModalOnPlacemark);
+            modernGeoObjects.each(addModalOnPlacemark);
+            eventsGeoObjects.each(addModalOnPlacemark);
+            archaeologyGeoObjects.each(addModalOnPlacemark);
+            demographicsGeoObjects.each(addModalOnPlacemark);
+        }
+        const scrollTopBtn = document.createElement('div');
+scrollTopBtn.classList.add('scroll-top');
+scrollTopBtn.innerHTML = '&#8679;';
+document.body.appendChild(scrollTopBtn);
+
+window.addEventListener('scroll', function() {
+    scrollTopBtn.style.display = window.scrollY > 200 ? 'block' : 'none';
+});
+
+scrollTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+    </script>
+</body>
+</html>

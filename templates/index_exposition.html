@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_exposition.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Виртуальный музей Крыма</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    <li>
+                        <a href="#">История</a>
+                        <ul class="submenu">
+                            <li><a href="/history_crimea">Древний Крым</a></li>
+                            <li><a href="/middle_ages">Средневековье</a></li>
+                            <li><a href="/modern">Новая история</a></li>
+                            <li><a href="/famous_personalities">Знаменитые личности</a></li>
+                            <li><a href="/photo_gallery">Фотогалерея</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Выставки</a>
+                        <ul class="submenu">
+                            <li><a href="#">Постоянные экспозиции</a></li>
+                            <li><a href="/temporary_exhibitions">Временные выставки</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a href="#">Экспонаты</a>
+                        <ul class="submenu">
+                            <li><a href="/archaeological_finds">Археологические находки</a></li>
+                            <li><a href="/cultural_artifacts">Культурные артефакты</a></li>
+                        </ul>
+
+                    </li>
+                    <li><a href="#">Карты и история</a>
+                        <ul class="submenu">
+
+                        <li><a href="/historical_map">Историческая карта Крыма</a></li>
+                        <li><a href="/timeline">Таймлайн</a></li></li>          
+                        </ul>
+
+                    <li><a href="/about">О проекте</a></li>
+                </ul>
+
+                <div class="hamburger">
+                    <span></span>
+                    <span ></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+        <main>
+            <section id="permanent-exhibitions">
+                <h1>Постоянные Экспозиции</h1>
+                <div class="container">
+                    <!-- Контент вкладок -->
+                    <div class="tab-content">
+                        <!-- Музей Крымский этнографический -->
+                        {% for item in text %}
+                            <div class="exhibition">
+                                <h3>{{ item[0] }}</h3>
+                                <p class="description">
+                                    {{ item[1] }}
+                                </p>
+                                <p class="location">Крымский этнографический музей</p>
+                                <button class="read-more">Читать далее</button>
+                            </div>
+                        {% endfor %}
+        
+                        <!-- Музей Таврида -->
+                        {% for tavrida in text_tavrida %}
+                            <div class="exhibition">
+                                <h3>{{ tavrida[0] }}</h3>
+                                <p class="description">
+                                    {{ tavrida[1] }}
+                                </p>
+                                <p class="location">Музей Таврида</p>
+                                <button class="read-more">Читать далее</button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer>
+            <div class="container">
+                <div class="footer-info">
+                    <h3>Виртуальный Музей Крыма</h3>
+                    <p>Откройте для себя богатую историю Крыма через уникальные виртуальные экспозиции и интерактивные ресурсы.</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Быстрые ссылки</h3>
+                    <ul>
+                        <li><a href="/">Главная</a></li>
+                        <li><a href="/history_crimea">История</a></li>
+                        <li><a href="/exposition">Выставки</a></li>
+                        <li><a href="/archaeological_finds">Экспонаты</a></li>
+                        <li><a href="/about">О проекте</a></li>
+                    </ul>
+                </div>
+                <div class="footer-subscribe">
+                    <h3>Подписка на новости</h3>
+                    <form action="/subscribe" method="POST">
+                        <input type="email" name="email" placeholder="Ваш email" required>
+                        <button type="submit">Подписаться</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Виртуальный Музей Крыма. Все права защищены.</p>
+            </div>
+        </footer>
+    <!-- Добавьте этот скрипт перед закрывающим тегом </body> -->
+    <script src="{{ url_for('static', filename='js/script_burger_menu.js') }}"></script>
+
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+        const exhibitions = document.querySelectorAll('.exhibition');
+
+        exhibitions.forEach(exhibition => {
+            const description = exhibition.querySelector('.description');
+            const readMoreBtn = exhibition.querySelector('.read-more');
+            const fullText = description.textContent.trim();
+
+            // Проверяем, превышает ли текст 500 символов
+            if (fullText.length > 500) {
+                const truncatedText = fullText.substring(0, 500) + '...';
+                description.textContent = truncatedText;
+
+                readMoreBtn.style.display = 'inline-block';
+
+                readMoreBtn.addEventListener('click', function() {
+                    if (description.classList.contains('expanded')) {
+                        description.textContent = truncatedText;
+                        description.classList.remove('expanded');
+                        this.textContent = 'Читать далее';
+                        exhibition.classList.remove('expanded');
+                    } else {
+                        description.textContent = fullText;
+                        description.classList.add('expanded');
+                        this.textContent = 'Читать меньше';
+                        exhibition.classList.add('expanded');
+                    }
+                });
+            } else {
+                // Если текст меньше или равен 500 символам, скрываем кнопку
+                readMoreBtn.style.display = 'none';
+            }
+        });
+    });
+    const scrollTopBtn = document.createElement('div');
+scrollTopBtn.classList.add('scroll-top');
+scrollTopBtn.innerHTML = '&#8679;';
+document.body.appendChild(scrollTopBtn);
+
+window.addEventListener('scroll', function() {
+    scrollTopBtn.style.display = window.scrollY > 200 ? 'block' : 'none';
+});
+
+scrollTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,580 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+
+/* Сброс стилей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Основные стили */
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    scroll-behavior: smooth;
+}
+
+/* Контейнер для центрирования */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Шапка сайта */
+header {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: background 0.3s ease;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+header .logo h1:hover {
+    color: #f0a500;
+}
+
+nav {
+    position: relative;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li {
+    position: relative;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: #f0a500;
+    left: 0;
+    bottom: -5px;
+    transition: width 0.3s ease;
+}
+
+header nav ul li a:hover::after {
+    width: 100%;
+}
+
+header nav ul li a:hover {
+    color: #f0a500;
+}
+
+header nav ul .submenu {
+    display: none;
+    position: absolute;
+    background: #444;
+    top: 100%;
+    left: 0;
+    padding: 10px 0;
+    border-radius: 5px;
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+header nav ul li:hover .submenu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+header nav ul .submenu li {
+    padding: 5px 20px;
+}
+
+header nav ul .submenu li a {
+    color: #fff;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+header nav ul .submenu li a:hover {
+    background: #555;
+    color: #f0a500;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger span {
+    height: 3px;
+    background: #fff;
+    margin: 4px 0;
+    width: 25px;
+    transition: transform 0.4s ease, opacity 0.4s ease, background 0.4s ease;
+    transform-origin: center center;
+}
+
+/* Стили для основного контента */
+.main-content {
+    padding: 120px 20px 40px; /* Отступ сверху учитывает фиксированный header */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.main-content h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap; /* Для лучшей адаптивности */
+}
+
+
+/* Общие стили для всех кнопок */
+.toggle-button {
+    display: inline-block;
+    padding: 10px 30px; /* Отступы для кнопки */
+    background: #f0a500; /* Основной цвет фона */
+    color: #333; /* Цвет текста */
+    text-decoration: none; /* Убираем подчеркивание */
+    border: none; /* Убираем границу */
+    border-radius: 5px; /* Закругленные углы */
+    font-weight: bold; /* Жирный шрифт */
+    font-size: 1.2rem; /* Размер шрифта */
+    transition: background 0.3s ease, color 0.6s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Плавные переходы */
+    box-shadow: 0 0 10px rgba(240, 165, 0, 0.5); /* Тень */
+    position: relative; /* Для псевдоэлемента ::after */
+    overflow: hidden; /* Скрываем псевдоэлемент */
+    z-index: 1; /* Позиционирование */
+    cursor: pointer; /* Курсор указателя при наведении */
+}
+
+/* Псевдоэлемент для эффекта затемнения */
+ .toggle-button::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 0%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.1); /* Полупрозрачное затемнение */
+    z-index: -1;
+    transition: height 0.3s ease; /* Плавное изменение высоты */
+}
+
+/* Эффект затемнения при наведении */
+.toggle-button:hover::after {
+    height: 100%; /* Полное покрытие затемнением */
+}
+
+/* Стили при наведении */
+.toggle-button:hover {
+    background: #c87f00; /* Изменение цвета фона при наведении */
+    color: white; /* Изменение цвета текста при наведении */
+    transform: translateY(-5px); /* Поднятие кнопки при наведении */
+    box-shadow: 0 10px 20px rgba(240, 165, 0, 0.3); /* Усиленная тень при наведении */
+}
+
+.toggle-button:active{
+    background: #a56400; /* Цвет фона при активном состоянии */
+    box-shadow: 0 4px 8px rgba(240, 165, 0, 0.2); /* Меньшая тень */
+    transform: translateY(-2px); /* Меньшее поднятие при нажатии */
+}
+@media (max-width: 768px) {
+    .toggle-button{
+        padding: 8px 25px; /* Уменьшенные отступы на средних экранах */
+        font-size: 1rem; /* Уменьшенный размер шрифта */
+    }
+}
+
+@media (max-width: 480px) {
+    .toggle-button {
+        padding: 6px 15px; /* Дополнительное уменьшение отступов на малых экранах */
+        font-size: 0.8rem; /* Дополнительное уменьшение размера шрифта */
+    }
+}
+
+/* Стили для активной кнопки */
+.toggle-button.active {
+    background: #a56400; /* Темный цвет фона */
+    color: white; /* Цвет текста при активном состоянии */
+    box-shadow: 0 4px 8px rgba(240, 165, 0, 0.2); /* Меньшая тень */
+    transform: translateY(-2px); /* Меньшее поднятие */
+}
+
+.artifacts-container {
+    display: none; /* По умолчанию скрыто */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.artifacts-container.active {
+    display: grid; /* Отображается как grid при активном состоянии */
+}
+
+.artifact-item {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    height: 100%;
+}
+
+.artifact-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.artifact-title {
+    padding: 15px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+    color: #333;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.artifact-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+}
+
+.artifact-item:hover img {
+    transform: scale(1.05);
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    position: relative;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modal-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 5px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: #f0a500;
+}
+
+/* Мобильные устройства */
+@media (max-width: 768px) {
+    header nav ul {
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        background: #333;
+        padding: 20px 0;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        border-radius: 0 0 10px 10px;
+        z-index: 999;
+    }
+
+    header nav ul li a {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    header nav ul.show {
+        display: flex;
+    }
+
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(7px, 7px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    header nav ul li {
+        width: 100%;
+        text-align: center;
+    }
+
+    header nav ul .submenu {
+        position: static;
+        display: none;
+        flex-direction: column;
+        background: #444;
+        margin-top: 10px;
+        border-radius: 5px;
+    }
+
+    header nav ul li:hover .submenu {
+        display: flex;
+    }
+
+    header .hamburger {
+        display: flex;
+    }
+
+    .main-content h1 {
+        font-size: 28px;
+        margin-bottom: 30px;
+    }
+
+    .artifact-item img {
+        height: 180px;
+    }
+
+    .artifact-title {
+        font-size: 1rem;
+        padding: 10px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .toggle-button {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    header .logo h1 {
+        font-size: 18px;
+    }
+
+    .main-content h1 {
+        font-size: 24px;
+    }
+
+    .artifact-item img {
+        height: 150px;
+    }
+
+    .artifact-title {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+
+    .toggle-button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+}
+
+h1, h3, h4 {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+h1:hover, h3:hover, h4:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+.scroll-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background: #f0a500;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: none;
+    z-index: 1000;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.scroll-top:hover {
+    background: #c87f00;
+    transform: translateY(-5px);
+}
+footer {
+    background: #333;
+    color: #fff;
+    padding: 40px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(to bottom right, transparent 50%, #333 50%);
+    transform: rotate(180deg);
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer-info,
+.footer-links,
+.footer-subscribe {
+    flex: 1 1 300px; /* Адаптивная ширина */
+    margin: 10px;
+}
+
+footer h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+footer p,
+footer ul {
+    font-size: 1rem;
+}
+
+footer ul {
+    list-style: none;
+}
+
+footer ul li {
+    margin-bottom: 10px;
+}
+
+footer ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer ul li a:hover {
+    color: #f0a500;
+}
+
+.footer-subscribe form {
+    display: flex;
+    max-width: 400px;
+}
+
+.footer-subscribe input[type="email"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    width: 70%;
+    outline: none;
+}
+
+.footer-subscribe button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background: #f0a500;
+    color: #333;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease, color 0.6s ease, transform 0.3s ease;
+}
+
+.footer-subscribe button:hover {
+    background: #c87f00;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #aaa;
+}

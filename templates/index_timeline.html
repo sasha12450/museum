@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Хронология Крыма</title>
+    <!-- Подключение основного CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- Подключение специфичного CSS для страницы хронологии -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_timeline.css') }}">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Виртуальный музей Крыма</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    <li>
+                        <a href="#">История</a>
+                        <ul class="submenu">
+                            <li><a href="/history_crimea">Древний Крым</a></li>
+                            <li><a href="/middle_ages">Средневековье</a></li>
+                            <li><a href="/modern">Новая история</a></li>
+                            <li><a href="/famous_personalities">Знаменитые личности</a></li>
+                            <li><a href="/photo_gallery">Фотогалерея</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Выставки</a>
+                        <ul class="submenu">
+                            <li><a href="/exposition">Постоянные экспозиции</a></li>
+                            <li><a href="/temporary_exhibitions">Временные выставки</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a href="#">Экспонаты</a>
+                        <ul class="submenu">
+                            <li><a href="/archaeological_finds">Археологические находки</a></li>
+                            <li><a href="/cultural_artifacts">Культурные артефакты</a></li>
+                        </ul>
+
+                    </li>
+                    <li><a href="#">Карты и история</a>
+                        <ul class="submenu">
+
+                        <li><a href="/historical_map">Историческая карта Крыма</a></li>
+                        <li><a href="#">Таймлайн</a></li></li>          
+                        </ul>
+
+                    <li><a href="/about">О проекте</a></li>
+                </ul>
+
+                <div class="hamburger">
+                    <span></span>
+                    <span ></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <!-- Секция вступления -->
+        <section class="timeline-introduction">
+            <div class="intro-content">
+                <h2>Добро пожаловать в Хронологию Крыма</h2>
+                <p>Изучите богатую и разнообразную историю Крыма, начиная с древних времен до современности. Наша хронология предлагает увлекательный обзор ключевых событий, важных личностей и культурных достижений, которые сформировали уникальную идентичность этого региона.</p>
+                <p>Прокрутите вниз, чтобы начать свое путешествие через века и узнать больше о каждом значимом этапе развития Крыма.</p>
+            </div>
+            <div class="intro-button">
+                <a href="#timeline" class="start-timeline-button">Начать Хронологию</a>
+            </div>
+        </section>
+
+        <!-- Секция хронологии -->
+        <div class="timeline" id="timeline">
+            <h3>Хронология</h3>
+            <div class="container">
+                <ul class="timeline-events">
+                    {% for event in events %}
+                    <li>
+                        <div class="timeline-date">{{ event.date }}</div>
+                        <div class="timeline-content">
+                            <h4>{{ event.title }}</h4>
+                            <p>{{ event.description }}</p>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </main>
+    <script src="{{ url_for('static', filename='js/script_burger_menu.js') }}"></script>
+
+    <footer>
+        <div class="container">
+            <div class="footer-info">
+                <h3>Виртуальный Музей Крыма</h3>
+                <p>Откройте для себя богатую историю Крыма через уникальные виртуальные экспозиции и интерактивные ресурсы.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Быстрые ссылки</h3>
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/history_crimea">История</a></li>
+                    <li><a href="/exposition">Выставки</a></li>
+                    <li><a href="/archaeological_finds">Экспонаты</a></li>
+                    <li><a href="/about">О проекте</a></li>
+                </ul>
+            </div>
+            <div class="footer-subscribe">
+                <h3>Подписка на новости</h3>
+                <form action="/subscribe" method="POST">
+                    <input type="email" name="email" placeholder="Ваш email" required>
+                    <button type="submit">Подписаться</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Виртуальный Музей Крыма. Все права защищены.</p>
+        </div>
+    </footer>
+    <script>
+const scrollTopBtn = document.createElement('div');
+scrollTopBtn.classList.add('scroll-top');
+scrollTopBtn.innerHTML = '&#8679;';
+document.body.appendChild(scrollTopBtn);
+
+window.addEventListener('scroll', function() {
+    scrollTopBtn.style.display = window.scrollY > 200 ? 'block' : 'none';
+});
+
+scrollTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+    </script>
+</body>
+</html>

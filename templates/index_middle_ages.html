@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href=" {{ url_for('static', filename='css/style_middle_ages.css') }}">
+
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Виртуальный музей Крыма</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    <li>
+                        <a href="#">История</a>
+                        <ul class="submenu">
+                            <li><a href="/history_crimea">Древний Крым</a></li>
+                            <li><a href="#">Средневековье</a></li>
+                            <li><a href="/modern">Новая история</a></li>
+                            <li><a href="/famous_personalities">Знаменитые личности</a></li>
+                            <li><a href="/photo_gallery">Фотогалерея</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Выставки</a>
+                        <ul class="submenu">
+                            <li><a href="/exposition">Постоянные экспозиции</a></li>
+                            <li><a href="/temporary_exhibitions">Временные выставки</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a href="#">Экспонаты</a>
+                        <ul class="submenu">
+                            <li><a href="/archaeological_finds">Археологические находки</a></li>
+                            <li><a href="/cultural_artifacts">Культурные артефакты</a></li>
+                        </ul>
+
+                    </li>
+                    <li><a href="#">Карты и история</a>
+                        <ul class="submenu">
+
+                        <li><a href="/historical_map">Историческая карта Крыма</a></li>
+                        <li><a href="/timeline">Таймлайн</a></li></li>          
+                        </ul>
+
+                    <li><a href="/about">О проекте</a></li>
+                </ul>
+
+                <div class="hamburger">
+                    <span></span>
+                    <span ></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <section id="medieval-crimea">
+            <div class="container">
+                <div class="section-header">
+                    <h1>Крым в Средневековье</h1>
+                    <p>Откройте для себя удивительный мир средневекового Крыма, который находился на пересечении культур, религий и торговых путей. Исследуйте его архитектуру, культуру и ключевые события, которые формировали его историю.</p>
+                </div>
+    
+                <!-- Ключевые факты о Средневековом Крыме -->
+                <section id="medieval-facts">
+                    <div class="infographic-container">
+                        <h2>Ключевые Факты о Средневековом Крыме</h2>
+                        <div class="infographic">
+                            <div class="fact-box">
+                                <h3>1239 г.</h3>
+                                <p>Монгольское нашествие на Крым и его включение в состав Золотой Орды.</p>
+                            </div>
+                            <div class="fact-box">
+                                <h3>1299 г.</h3>
+                                <p>Разгром Крыма войсками хана Ногая, что привело к значительным изменениям в регионе.</p>
+                            </div>
+                            <div class="fact-box">
+                                <h3>XIV век</h3>
+                                <p>Расцвет торговли между Генуэзской Республикой и Золотой Ордой, развитие портов Кафы и Судака.</p>
+                            </div>
+                            <div class="fact-box">
+                                <h3>1475 г.</h3>
+                                <p>Завоевание Крыма Османской империей и установление сюзеренитета над Крымским ханством.</p>
+                            </div>
+
+                            <div class="fact-box">
+                                <h3>1239 г.</h3>
+                                <p>Монгольское нашествие на Крым и его включение в состав Золотой Орды.</p>
+                            </div>
+                            <div class="fact-box">
+                                <h3>1299 г.</h3>
+                                <p>Разгром Крыма войсками хана Ногая, что привело к значительным изменениям в регионе.</p>
+                            </div>
+                            <div class="fact-box">
+                                <h3>1347 г.</h3>
+                                <p>Завоз чумы в Европу через Кафу, которая привела к пандемии "Черной смерти".</p>
+                            </div>
+                            <div class="fact-box">
+                                <h3>1380 г.</h3>
+                                <p>Участие крымских татар в Куликовской битве на стороне Мамая против русских княжеств.</p>
+                            </div>
+                            <div class="fact-box">
+                                <h3>1399 г.</h3>
+                                <p>Поход хана Тохтамыша в Крым и временное ослабление влияния Золотой Орды.
+                                </p>
+                            </div>
+                            <div class="fact-box">
+                                <h3>1475 г.
+                                </h3>
+                                <p>Завоевание Крыма Османской империей и установление сюзеренитета над Крымским ханством.</p>
+                            </div>
+                            <div class="fact-box">
+                                <h3>1480 г.</h3>
+                                <p>Крымские татары начинают совершать регулярные набеги на русские земли, включая набег на Москву.</p>
+                            </div>
+                            <div class="fact-box">
+                                <h3>1532 г.</h3>
+                                <p>Возведение крепости Ор-Капы (Перекоп) для защиты от возможных вторжений с севера.</p>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+    
+
+    
+                <!-- Видео о Средневековом Крыме 
+                <section id="medieval-videos">
+                    <div class="container">
+                        <h2>Видео о Средневековом Крыме</h2>
+                        <div class="video-gallery">
+                            <video width="560" height="315" controls>
+                                <source src="{{ url_for('static', filename='video/video_history.mp4') }}" type="video/mp4">
+                                Ваш браузер не поддерживает тег video.
+                            </video>
+                            <p>Документальный фильм о развитии Крыма в Средневековье.</p>
+                        </div>
+                    </div>
+                </section>
+-->
+                <section id="medieval-infographics">
+                    <div class="container">
+                        <h2>Экономика и Общество</h2>
+                        <div class="infographics">
+                            <p>Карта, показывающая торговые пути и экономические связи Крыма в средневековый период.</p>
+                            <div id="yandex-map" style="width: 100%; height: 500px;"></div>
+
+                        </div>
+                    </div>
+                </section>
+    
+                <!-- Диаграммы и Статистика -->
+                <section id="medieval-charts">
+                    <div class="container">
+                        <div class="chart-container">
+                            <canvas id="medieval-chart"></canvas>
+                        </div>
+                        
+                    </div>
+                </section>
+                
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-info">
+                <h3>Виртуальный Музей Крыма</h3>
+                <p>Откройте для себя богатую историю Крыма через уникальные виртуальные экспозиции и интерактивные ресурсы.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Быстрые ссылки</h3>
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/history_crimea">История</a></li>
+                    <li><a href="/exposition">Выставки</a></li>
+                    <li><a href="/archaeological_finds">Экспонаты</a></li>
+                    <li><a href="/about">О проекте</a></li>
+                </ul>
+            </div>
+            <div class="footer-subscribe">
+                <h3>Подписка на новости</h3>
+                <form action="/subscribe" method="POST">
+                    <input type="email" name="email" placeholder="Ваш email" required>
+                    <button type="submit">Подписаться</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Виртуальный Музей Крыма. Все права защищены.</p>
+        </div>
+    </footer>
+
+<script>
+    const scrollTopBtn = document.createElement('div');
+scrollTopBtn.classList.add('scroll-top');
+scrollTopBtn.innerHTML = '&#8679;';
+document.body.appendChild(scrollTopBtn);
+
+window.addEventListener('scroll', function() {
+    scrollTopBtn.style.display = window.scrollY > 200 ? 'block' : 'none';
+});
+
+scrollTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+</script>
+    <script src="{{ url_for('static', filename='js/script_burger_menu.js') }}"></script>
+    <script src="https://api-maps.yandex.ru/2.1/?apikey=b4ef5db4-1d14-40e6-b31f-8efb822e4adb&lang=ru_RU" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/script_middle_ages.js') }}"></script>
+</body>
+</html>

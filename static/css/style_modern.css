@@ -1,0 +1,523 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+
+/* Сброс стилей */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Основные стили */
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    scroll-behavior: smooth;
+}
+
+/* Контейнер для центрирования */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Шапка сайта */
+header {
+    background: #333;
+    color: #fff;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    transition: background 0.3s ease;
+}
+
+header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header .logo h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+header .logo h1:hover {
+    color: #f0a500;
+}
+
+nav {
+    position: relative;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li {
+    position: relative;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+header nav ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    background: #f0a500;
+    left: 0;
+    bottom: -5px;
+    transition: width 0.3s ease;
+}
+
+header nav ul li a:hover::after {
+    width: 100%;
+}
+
+header nav ul li a:hover {
+    color: #f0a500;
+}
+
+header nav ul .submenu {
+    display: none;
+    position: absolute;
+    background: #444;
+    top: 100%;
+    left: 0;
+    padding: 10px 0;
+    border-radius: 5px;
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+header nav ul li:hover .submenu {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+header nav ul .submenu li {
+    padding: 5px 20px;
+}
+
+header nav ul .submenu li a {
+    color: #fff;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+header nav ul .submenu li a:hover {
+    background: #555;
+    color: #f0a500;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger span {
+    height: 3px;
+    background: #fff;
+    margin: 4px 0;
+    width: 25px;
+    transition: transform 0.4s ease, opacity 0.4s ease, background 0.4s ease;
+    transform-origin: center center;}
+/* Медиазапросы для адаптивности */
+
+.begin_page{
+    padding-top: 90px;
+    padding-bottom: 40px;
+}
+main ul{
+    padding: 0px 0px 30px 0px;
+}
+
+
+@media (max-width: 768px) {
+    header nav ul {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      background: #333;
+      padding: 20px 0; /* Уменьшите паддинг по бокам для полной ширины */
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      border-radius: 0 0 10px 10px;
+      z-index: 999; /* Чтобы меню было поверх других элементов */
+    }
+  
+    header nav ul li a {
+      display: block;
+      width: 100%;
+      padding: 5px 0; /* Увеличьте верхний и нижний отступ для лучшей нажимаемости */
+      color: #fff;
+      text-decoration: none;
+    }
+      header nav ul.show {
+          display: flex;
+      }
+      .hamburger span {
+          height: 3px;
+          background: #fff;
+          margin: 4px 0;
+          width: 25px;
+          transition: transform 0.4s ease, opacity 0.4s ease, background 0.4s ease;
+          transform-origin: center center;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+          transform: rotate(45deg) translate(7px, 7px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+          opacity: 0; /* Это скрывает среднюю полоску */
+        }
+        
+        .hamburger.active span:nth-child(3) {
+          transform: rotate(-45deg) translate(7px, -7px);
+        }
+      header nav ul li {
+          width: 100%;
+          text-align: center;
+      }
+  
+      header nav ul .submenu {
+          position: static;
+          display: none;
+          flex-direction: column;
+          background: #444;
+          margin-top: 10px;
+          border-radius: 5px;
+      }
+  
+      header nav ul li:hover .submenu {
+          display: flex;
+      }
+  
+      header .hamburger {
+          display: flex;
+      }
+  
+
+  }
+  
+  @media (max-width: 480px) {
+      header .logo h1 {
+          font-size: 18px;
+      }
+  }
+  h1, h3, h4 {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+h1:hover, h3:hover, h4:hover {
+    transform: translateY(-2px);
+    opacity: 0.9;
+}
+ul {
+    list-style: none; /* Убираем стандартные маркеры */
+    padding-left: 0;
+}
+
+
+
+main ul li:before {
+    content: '';
+    position: absolute;
+    left: 0; /* Позиционируем маркер слева внутри <li> */
+    top: 50%; /* Вертикально центрируем маркер */
+    transform: translateY(-50%); /* Корректируем центрирование */
+    width: 8px; /* Толщина маркера */
+    height: 8px; /* Высота маркера */
+    background: #f0a500; /* Цвет маркера */
+    border-radius: 50%; /* Закругление */
+}
+main ul li {
+    position: relative; /* Устанавливаем относительное позиционирование */
+    padding-left: 20px; /* Добавляем отступ слева для маркера */
+}
+
+.section_news{
+    background-color: #f9f9f9; /* Фон секции */
+    padding: 20px; /* Внутренние отступы */
+    border-radius: 8px; /* Закругленные углы */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень для объема */
+    margin: 20px 0; /* Отступы сверху и снизу */
+}
+.section_news .current_events{
+    font-size: 1.2rem; /* Размер шрифта */
+    color: #333; /* Цвет текста */
+    line-height: 1.6; /* Межстрочный интервал */
+    margin: 0; /* Убираем отступы */
+}
+.section_news .current_events::before{
+    content: '🔔 '; /* Иконка перед текстом */
+    font-size: 1.5rem; /* Размер иконки */
+}
+.news-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px; /* Adjusts spacing between items */
+    padding: 20px;
+}
+
+.news-item {
+    background: #f9f9f9; /* Light background for the news block */
+    border-radius: 8px; /* Rounded corners */
+    overflow: hidden; /* Prevents overflow of content */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    width: calc(33.333% - 20px); /* Three items per row */
+    max-width: 325px; /* Limits the width */
+}
+
+.news-image {
+    width: 100%;
+    height: auto; /* Maintains aspect ratio */
+}
+
+.news-content {
+    padding: 15px; /* Padding for the text content */
+}
+
+.news-title {
+    font-size: 1.1em; /* Adjusts font size for title */
+    margin: 0 0 10px; /* Margin below the title */
+    color: #f0a500;
+}
+
+.news-description {
+    font-size: 0.9em; /* Slightly smaller font for description */
+    margin: 0 0 15px; /* Margin below the description */
+}
+
+.read-more {
+    display: inline-block;
+    padding: 10px 30px;
+    background: #f0a500;
+    color: #333;
+    border: none;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s ease, color 0.6s ease, transform 0.3s ease;
+    box-shadow: 0 0 10px rgba(240, 165, 0, 0.5);
+}
+
+.read-more:hover {
+    background: #c87f00;
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(240, 165, 0, 0.3);
+    
+}
+.read-more{
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.read-more::after{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 0%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.1);
+    z-index: -1;
+    transition: height 0.3s ease;
+}
+
+.read-more:hover::after {
+    height: 100%;
+}
+.publication-date {
+    font-size: 0.85em; /* Меньший размер шрифта */
+    color: #fff; /* Белый цвет текста */
+    background-color: #f0a500; /* Фон совпадает с акцентным цветом */
+    padding: 5px 10px; /* Внутренние отступы */
+    border-radius: 15px; /* Закругленные углы */
+    display: inline-flex; /* Для выравнивания иконки и текста */
+    align-items: center; /* Центрирование по вертикали */
+    gap: 5px; /* Расстояние между иконкой и текстом */
+    margin-top: 10px; /* Отступ сверху */
+    font-family: 'Montserrat', sans-serif; /* Совпадает с основным шрифтом */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Легкая тень для объема */
+}
+
+.publication-date::before {
+    content: "📅"; /* Код иконки календаря Font Awesome */
+    font-family: "Font Awesome 6 Free"; /* Убедитесь, что подключена правильная версия Font Awesome */
+    font-weight: 900; /* Толщина иконки */
+    font-size: 0.9em; /* Размер иконки */
+}
+.scroll-top {
+    position: fixed;
+    bottom: 40px;
+    right: 40px;
+    background: #f0a500;
+    color: #333;
+    padding: 10px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: none;
+    z-index: 1000;
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.scroll-top:hover {
+    background: #c87f00;
+    transform: translateY(-5px);
+}
+@media (max-width: 768px) {
+    .publication-date {
+        font-size: 0.8em;
+        padding: 4px 8px;
+    }
+    .publication-date::before {
+        font-size: 0.8em;
+    }
+}
+
+@media (max-width: 480px) {
+    .publication-date {
+        font-size: 0.75em;
+        padding: 3px 6px;
+    }
+    .publication-date::before {
+        font-size: 0.75em;
+    }
+}
+footer {
+    background: #333;
+    color: #fff;
+    padding: 40px 0;
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(to bottom right, transparent 50%, #333 50%);
+    transform: rotate(180deg);
+}
+
+footer .container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.footer-info,
+.footer-links,
+.footer-subscribe {
+    flex: 1 1 300px; /* Адаптивная ширина */
+    margin: 10px;
+}
+
+footer h3 {
+    font-family: 'Playfair Display', serif;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+footer p,
+footer ul {
+    font-size: 1rem;
+}
+
+footer ul {
+    list-style: none;
+}
+
+footer ul li {
+    margin-bottom: 10px;
+}
+
+footer ul li a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+footer ul li a:hover {
+    color: #f0a500;
+}
+
+.footer-subscribe form {
+    display: flex;
+    max-width: 400px;
+}
+
+.footer-subscribe input[type="email"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    width: 70%;
+    outline: none;
+}
+
+.footer-subscribe button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background: #f0a500;
+    color: #333;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s ease, color 0.6s ease, transform 0.3s ease;
+}
+
+.footer-subscribe button:hover {
+    background: #c87f00;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .news-item {
+        width: calc(50% - 20px); /* Two items per row on medium screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .news-item {
+        width: 100%; /* One item per row on small screens */
+    }
+}

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Музейные фотографии</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_cultural_artifacts.css') }}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Playfair+Display:wght@400;700&display=swap">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Виртуальный музей Крыма</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    <li>
+                        <a href="#">История</a>
+                        <ul class="submenu">
+                            <li><a href="/history_crimea">Древний Крым</a></li>
+                            <li><a href="/middle_ages">Средневековье</a></li>
+                            <li><a href="/modern">Новая история</a></li>
+                            <li><a href="/famous_personalities">Знаменитые личности</a></li>
+                            <li><a href="/photo_gallery">Фотогалерея</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Выставки</a>
+                        <ul class="submenu">
+                            <li><a href="/exposition">Постоянные экспозиции</a></li>
+                            <li><a href="/temporary_exhibitions">Временные выставки</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a href="#">Экспонаты</a>
+                        <ul class="submenu">
+                            <li><a href="/archaeological_finds">Археологические находки</a></li>
+                            <li><a href="#">Культурные артефакты</a></li>
+                        </ul>
+
+                    </li>
+                    <li><a href="#">Карты и история</a>
+                        <ul class="submenu">
+
+                        <li><a href="/historical_map">Историческая карта Крыма</a></li>
+                        <li><a href="/timeline">Таймлайн</a></li></li>          
+                        </ul>
+
+                    <li><a href="/about">О проекте</a></li>
+                </ul>
+
+                <div class="hamburger">
+                    <span></span>
+                    <span ></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <h1>Музейные фотографии</h1>
+
+        <div class="button-group">
+            <button id="museum1Button" class="toggle-button active">Дом-музей А.П. Чехова в Ялте</button>
+            <button id="museum2Button" class="toggle-button">Центральная городская библиотека Л.Н. Толстого</button>
+        </div>
+
+        <div id="museum1Photos" class="artifacts-container active">
+            {% for artifacts in artifact %}
+            <div class="artifact-item" data-image="{{ artifacts[1] }}">
+                <img src="{{ artifacts[1] }}" alt="{{ artifacts[0] }}" loading="lazy">
+                <div class="artifact-title">{{ artifacts[0] }}</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div id="museum2Photos" class="artifacts-container">
+            {% for labrarys in artifacts_library %}
+            <div class="artifact-item" data-image="{{ labrarys[1] }}">
+                <img src="{{ labrarys[1] }}" alt="{{ labrarys[0] }}" loading="lazy">
+                <div class="artifact-title">{{ labrarys[0] }}</div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Модальное окно -->
+        <div id="modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="modalImage">
+            <div class="modal-content">
+                <button class="close-btn" aria-label="Закрыть модальное окно">&times;</button>
+                <img id="modalImage" src="" alt="Просмотр артефакта">
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="container">
+            <div class="footer-info">
+                <h3>Виртуальный Музей Крыма</h3>
+                <p>Откройте для себя богатую историю Крыма через уникальные виртуальные экспозиции и интерактивные ресурсы.</p>
+            </div>
+            <div class="footer-links">
+                <h3>Быстрые ссылки</h3>
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    <li><a href="/history_crimea">История</a></li>
+                    <li><a href="/exposition">Выставки</a></li>
+                    <li><a href="/archaeological_finds">Экспонаты</a></li>
+                    <li><a href="/about">О проекте</a></li>
+                </ul>
+            </div>
+            <div class="footer-subscribe">
+                <h3>Подписка на новости</h3>
+                <form action="/subscribe" method="POST">
+                    <input type="email" name="email" placeholder="Ваш email" required>
+                    <button type="submit">Подписаться</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Виртуальный Музей Крыма. Все права защищены.</p>
+        </div>
+    </footer>
+    <script src="{{ url_for('static', filename='js/script_burger_menu.js') }}"></script>
+
+    <script>
+        const museum1Button = document.getElementById('museum1Button');
+        const museum2Button = document.getElementById('museum2Button');
+        const museum1Photos = document.getElementById('museum1Photos');
+        const museum2Photos = document.getElementById('museum2Photos');
+
+        museum1Button.addEventListener('click', function () {
+            if (!museum1Photos.classList.contains('active')) {
+                museum1Photos.classList.add('active');
+                museum2Photos.classList.remove('active');
+                museum1Button.classList.add('active');
+                museum2Button.classList.remove('active');
+            }
+        });
+
+        museum2Button.addEventListener('click', function () {
+            if (!museum2Photos.classList.contains('active')) {
+                museum2Photos.classList.add('active');
+                museum1Photos.classList.remove('active');
+                museum2Button.classList.add('active');
+                museum1Button.classList.remove('active');
+            }
+        });
+
+        // JavaScript для модального окна
+        const modal = document.getElementById('modal');
+        const modalImage = document.getElementById('modalImage');
+        const closeModalBtn = document.querySelector('.close-btn');
+
+        // Функция открытия модального окна
+        function openModal(imageSrc, altText) {
+            modalImage.src = imageSrc;
+            modalImage.alt = altText;
+            modal.classList.add('active');
+            modal.setAttribute('aria-hidden', 'false');
+            closeModalBtn.focus();
+        }
+
+        // Обработчики событий для артефактов
+        function updateArtifactItems() {
+            const artifactItems = document.querySelectorAll('.artifact-item');
+
+            artifactItems.forEach(item => {
+                item.removeEventListener('click', openModalHandler);
+                item.addEventListener('click', openModalHandler);
+            });
+        }
+
+        function openModalHandler() {
+            const imageSrc = this.getAttribute('data-image');
+            const altText = this.querySelector('.artifact-title').textContent;
+            openModal(imageSrc, altText);
+        }
+
+        // Изначально обновляем обработчики событий для артефактов музея 1
+        updateArtifactItems();
+
+        // Обновляем обработчики событий при переключении
+        museum1Button.addEventListener('click', updateArtifactItems);
+        museum2Button.addEventListener('click', updateArtifactItems);
+
+        // Закрытие модального окна при нажатии на крестик
+        closeModalBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+        });
+
+        // Закрытие модального окна при нажатии за его пределами
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+            }
+        });
+
+        // Закрытие модального окна при нажатии клавиши Esc
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && modal.classList.contains('active')) {
+                modal.classList.remove('active');
+                modal.setAttribute('aria-hidden', 'true');
+            }
+        });
+        const scrollTopBtn = document.createElement('div');
+scrollTopBtn.classList.add('scroll-top');
+scrollTopBtn.innerHTML = '&#8679;';
+document.body.appendChild(scrollTopBtn);
+
+window.addEventListener('scroll', function() {
+    scrollTopBtn.style.display = window.scrollY > 200 ? 'block' : 'none';
+});
+
+scrollTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+    </script>
+</body>
+
+
+</html>

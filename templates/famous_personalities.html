@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style_famous.css') }}">
+
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>Виртуальный музей Крыма</h1>
+            </div>
+            <nav class="nav">
+                <ul>
+                    <li><a href="/">Главная</a></li>
+                    <li>
+                        <a href="#">История</a>
+                        <ul class="submenu">
+                            <li><a href="/history_crimea">Древний Крым</a></li>
+                            <li><a href="/middle_ages">Средневековье</a></li>
+                            <li><a href="/modern">Новая история</a></li>
+                            <li><a href="#">Знаменитые личности</a></li>
+                            <li><a href="/photo_gallery">Фотогалерея</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Выставки</a>
+                        <ul class="submenu">
+                            <li><a href="/exposition">Постоянные экспозиции</a></li>
+                            <li><a href="/temporary_exhibitions">Временные выставки</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a href="#">Экспонаты</a>
+                        <ul class="submenu">
+                            <li><a href="/archaeological_finds">Археологические находки</a></li>
+                            <li><a href="/cultural_artifacts">Культурные артефакты</a></li>
+                        </ul>
+
+                    </li>
+                    <li><a href="#">Карты и история</a>
+                        <ul class="submenu">
+
+                        <li><a href="/historical_map">Историческая карта Крыма</a></li>
+                        <li><a href="/timeline">Таймлайн</a></li></li>          
+                        </ul>
+
+                    <li><a href="/about">О проекте</a></li>
+                </ul>
+
+                <div class="hamburger">
+                    <span></span>
+                    <span ></span>
+                    <span></span>
+                </div>
+            </nav>
+        </div>
+    </header>
+   <main>
+
+        <section class="intro">
+            <h1>Знаменитые личности Крыма</h1>
+            <p>Познакомьтесь с выдающимися деятелями, которые внесли значительный вклад в историю и культуру Крыма.</p>
+        </section>
+
+        <section class="featured-persons">
+            <div class="container">
+            <h2>Выдающиеся личности</h2>
+            <div class="person-cards">
+                {% for event in events %}
+
+                <div class="person-card">
+                    <div class="event">
+                        <img src="{{ event.link }}" alt="{{ event.name }}">
+                        <h3>{{ event.name }}</h3>
+                        <p class="event-description">
+                            <span class="short-text">{{ event.description[:200] }}...</span>
+                            <span class="full-text">{{ event.description }}</span>
+                        </p>
+                        <a href="#" class="toggle-button">Читать далее</a>
+                    </div>
+                    
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+        </section>
+
+   </main>
+   <footer>
+    <div class="container">
+        <div class="footer-info">
+            <h3>Виртуальный Музей Крыма</h3>
+            <p>Откройте для себя богатую историю Крыма через уникальные виртуальные экспозиции и интерактивные ресурсы.</p>
+        </div>
+        <div class="footer-links">
+            <h3>Быстрые ссылки</h3>
+            <ul>
+                <li><a href="/">Главная</a></li>
+                <li><a href="/history_crimea">История</a></li>
+                <li><a href="/exposition">Выставки</a></li>
+                <li><a href="/archaeological_finds">Экспонаты</a></li>
+                <li><a href="/about">О проекте</a></li>
+            </ul>
+        </div>
+        <div class="footer-subscribe">
+            <h3>Подписка на новости</h3>
+            <form action="/subscribe" method="POST">
+                <input type="email" name="email" placeholder="Ваш email" required>
+                <button type="submit">Подписаться</button>
+            </form>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Виртуальный Музей Крыма. Все права защищены.</p>
+    </div>
+</footer>
+    <script src="{{ url_for('static', filename='js/script_burger_menu.js') }}"></script>
+   <script>
+         document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.toggle-button');
+            
+            buttons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    
+                    const eventDescription = this.previousElementSibling;
+                    const shortText = eventDescription.querySelector('.short-text');
+                    const fullText = eventDescription.querySelector('.full-text');
+                    
+                    if (fullText.style.display === 'none' || fullText.style.display === '') {
+                        fullText.style.display = 'inline';
+                        shortText.style.display = 'none';
+                        this.textContent = 'Свернуть';
+                    } else {
+                        fullText.style.display = 'none';
+                        shortText.style.display = 'inline';
+                        this.textContent = 'Читать далее';
+                    }
+                });
+            });
+        });
+        const scrollTopBtn = document.createElement('div');
+scrollTopBtn.classList.add('scroll-top');
+scrollTopBtn.innerHTML = '&#8679;';
+document.body.appendChild(scrollTopBtn);
+
+window.addEventListener('scroll', function() {
+    scrollTopBtn.style.display = window.scrollY > 200 ? 'block' : 'none';
+});
+
+scrollTopBtn.addEventListener('click', function() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+   </script>
+</body>
+</html>
